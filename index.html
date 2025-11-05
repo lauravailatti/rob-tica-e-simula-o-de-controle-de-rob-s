@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RoboLab — Painel Interativo de Robótica</title>
+  <meta name="description" content="Simulador de painel para controle e telemetria de um robô - projeto para aula de robótica." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <!-- SVG logo inline -->
+      <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="#0ea5a4" d="M12 2l3 6 6 .5-4.5 4 1 6L12 16l-5.5 2.5 1-6L3 8.5 9 8 12 2z"></path>
+      </svg>
+      <div>
+        <h1>RoboLab</h1>
+        <p class="subtitle">Painel interativo de simulação — Aula de Robótica</p>
+      </div>
+    </div>
+
+    <nav aria-label="Ações rápidas">
+      <button id="btn-demo" class="btn" title="Executar demonstração">▶ Demo</button>
+      <button id="btn-reset" class="btn secondary" title="Resetar valores">⟲ Reset</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="left-panel" aria-labelledby="controls-title">
+      <h2 id="controls-title">Controles</h2>
+
+      <div class="control-group" role="group" aria-label="Controle de motores">
+        <h3>Motores</h3>
+        <label for="motor-left">Motor Esquerdo: <span id="motor-left-val">0</span></label>
+        <input id="motor-left" type="range" min="-100" max="100" value="0" />
+        <label for="motor-right">Motor Direito: <span id="motor-right-val">0</span></label>
+        <input id="motor-right" type="range" min="-100" max="100" value="0" />
+      </div>
+
+      <div class="control-group" role="group" aria-label="Braço robótico">
+        <h3>Braço</h3>
+        <label for="arm-angle">Ângulo (°): <span id="arm-angle-val">0</span></label>
+        <input id="arm-angle" type="range" min="0" max="180" value="0" />
+        <div class="inline-controls">
+          <button id="arm-up" class="btn small">↑</button>
+          <button id="arm-down" class="btn small">↓</button>
+          <button id="grip-toggle" class="btn small secondary">Abrir/Fechar Garra</button>
+        </div>
+      </div>
+
+      <div class="control-group" role="group" aria-label="Sensores">
+        <h3>Sensores (simulados)</h3>
+        <label for="sensor-range">Distância (cm): <span id="sensor-range-val">120</span></label>
+        <input id="sensor-range" type="range" min="5" max="200" value="120" />
+        <label for="ambient">Luminosidade (lux): <span id="ambient-val">300</span></label>
+        <input id="ambient" type="range" min="0" max="1000" value="300" />
+        <div class="sensor-status" aria-live="polite">
+          <p>Proximidade: <span id="prox-status">OK</span></p>
+          <p>Iluminação: <span id="light-status">Média</span></p>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <h3>Telemetria</h3>
+        <div class="telemetry-grid">
+          <div><strong>Velocidade</strong><span id="tele-speed">0.0 m/s</span></div>
+          <div><strong>Bateria</strong><span id="tele-batt">100%</span></div>
+          <div><strong>Temperatura</strong><span id="tele-temp">28°C</span></div>
+        </div>
+        <div class="inline-controls">
+          <button id="start-tele" class="btn">Iniciar Telemetria</button>
+          <button id="stop-tele" class="btn secondary">Parar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="right-panel" aria-labelledby="visual-title">
+      <h2 id="visual-title">Visão do Robô</h2>
+
+      <div class="visualization" role="img" aria-label="Simulação visual do robô com braço e indicadores">
+        <div id="robot-canvas-wrap">
+          <!-- Canvas animation -->
+          <canvas id="robot-canvas" width="640" height="360"></canvas>
+        </div>
+
+        <div class="panel-overlay">
+          <div class="mini-gauges">
+            <div class="gauge">
+              <label>Motor L</label>
+              <meter id="g-motor-l" min="-100" max="100" value="0"></meter>
+            </div>
+            <div class="gauge">
+              <label>Motor R</label>
+              <meter id="g-motor-r" min="-100" max="100" value="0"></meter>
+            </div>
+            <div class="gauge">
+              <label>Bateria</label>
+              <meter id="g-batt" min="0" max="100" value="100"></meter>
+            </div>
+          </div>
+
+          <div class="chart-wrap">
+            <canvas id="tele-chart" width="420" height="120" aria-hidden="true"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <p><strong>Teclas de atalho:</strong> W/S — frente/verso | A/D — virar | Q/E — braço ⬆/⬇</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Projeto fictício para demonstração. Código bem comentado para uso em aula.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
